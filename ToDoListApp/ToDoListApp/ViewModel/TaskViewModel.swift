@@ -9,10 +9,15 @@ import Foundation
 
 class TaskViewModel: ObservableObject {
     @Published var tasks: [TaskProtocol] = []
-    private var taskFactory = TaskFactory()
     
     func addTask(title: String, type: TaskType) {
-        let newTask = taskFactory.createTask(title: title, type: type)
+        let newTask: TaskProtocol
+        switch type {
+        case .normal:
+            newTask = Task(title: title, type: .normal)
+        case .highPriority:
+            newTask = HighPriorityTask(title: title)
+        }
         tasks.append(newTask)
     }
     
